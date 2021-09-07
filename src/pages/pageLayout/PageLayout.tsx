@@ -1,9 +1,10 @@
-import ThemeSwitch from "../../components/ThemeSwitch";
+import Header from "../../components/Header";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { useEffect } from "react";
 import { setTheme } from "../../components/reducers/ThemeSlice";
 import styled from "styled-components";
-import Home from '../Home'
+import Home from '../Home';
+import Logo from '../../img/team.png'
 interface PageLayoutProps {
   toggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +19,7 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
   }, [toggle]);
   return (
     <PageLayoutExternalContainer colorTheme={colorTheme}>
-      <ThemeSwitch toggle={toggle} setToggle={setToggle} />
+      <Header toggle={toggle} setToggle={setToggle} logo={Logo}/>
       <Home />
     </PageLayoutExternalContainer>
   );

@@ -37,7 +37,7 @@ export const JobPreviewContainer = styled.div<{colorTheme:string}>`
   display: flex;
   flex-flow: column wrap;
   padding: 1.5em;
-  width: 18em;
+  width: 15em;
   margin: 2em;
   background-color:${(props) =>
     props.theme[props.colorTheme].cardColor.primaryColor};

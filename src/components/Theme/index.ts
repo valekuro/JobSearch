@@ -1,3 +1,3 @@
-import Theme, {DarkTheme, LightTheme} from "./Theme";
-export type { DarkTheme, LightTheme };
+import Theme, {DarkTheme, LightTheme, IconPrefix} from "./Theme";
+export type { DarkTheme, LightTheme,  IconPrefix };
 export default Theme;
