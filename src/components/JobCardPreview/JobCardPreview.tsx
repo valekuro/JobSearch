@@ -1,48 +1,67 @@
 import styled from "styled-components";
-import CardsBadge from '../CardsBadge'
+import CardsBadge from "../CardsBadge";
 import { useAppSelector } from "../../store/hooks";
 
-export interface JobCardPreviewProps{
-    topInformations?: string[],
-    title?: string,
-    insertBy?: string,
-    footer?:string
+export interface JobCardPreviewProps {
+  topInformations?: string[];
+  title?: string;
+  insertBy?: string;
+  button?: JSX.Element;
+  footer?: string;
+  displayBadge: boolean;
+  badgeContent?: JSX.Element | string;
 }
 
-export default function JobCardPreview({topInformations, title, insertBy, footer}:JobCardPreviewProps) {
+export default function JobCardPreview({
+  topInformations,
+  title,
+  insertBy,
+  button,
+  footer,
+  displayBadge,
+  badgeContent
+}: JobCardPreviewProps) {
   const colorTheme = useAppSelector((state) => state.ThemeSlice.themeSelected);
 
-    return (
-      <JobPreviewContainer colorTheme={colorTheme}>
-        <CardsBadge/>
-        <SmallFontContainer> 
-            {
-            topInformations?.map((singleInformation:string, key:number)=>{
-                return <span key={key}>{singleInformation} </span>
-            })
-            }
-        </SmallFontContainer>
-        <TitleContainer>{title}</TitleContainer>
-        <SmallFontContainer>{insertBy}</SmallFontContainer>
-        <FooterContainer>{footer}</FooterContainer>
-      </JobPreviewContainer>
-    );
-  }
-  
+  return (
+    <JobPreviewContainer colorTheme={colorTheme}>
+      {displayBadge ? <CardsBadge content={badgeContent}/> : null}
 
-export const JobPreviewContainer = styled.div<{colorTheme:string}>`
-  box-shadow: 0 3px 26px ${(props) =>
-    props.theme[props.colorTheme].shadows.primaryShadows}, 0 16px 47px ${(props) =>
-      props.theme[props.colorTheme].shadows.primaryShadows};
+      {button ? (
+        <LayoutWIthButton>
+          <TitleContainer>{title}</TitleContainer>
+          <ButtonContainer>{button}</ButtonContainer>
+        </LayoutWIthButton>
+      ) : (
+        <>
+          <SmallFontContainer>
+            {topInformations?.map((singleInformation: string, key: number) => {
+              return <span key={key}>{singleInformation} </span>;
+            })}
+          </SmallFontContainer>
+          <TitleContainer>{title}</TitleContainer>
+          <SmallFontContainer>{insertBy}</SmallFontContainer>
+
+          <FooterContainer>{footer}</FooterContainer>
+        </>
+      )}
+    </JobPreviewContainer>
+  );
+}
+
+export const JobPreviewContainer = styled.div<{ colorTheme: string }>`
+  box-shadow: 0 3px 26px
+      ${(props) => props.theme[props.colorTheme].shadows.primaryShadows},
+    0 16px 47px
+      ${(props) => props.theme[props.colorTheme].shadows.primaryShadows};
   display: flex;
   flex-flow: column wrap;
   padding: 1.5em;
   width: 15em;
   margin: 2em;
-  background-color:${(props) =>
+  background-color: ${(props) =>
     props.theme[props.colorTheme].cardColor.primaryColor};
 `;
-
 
 export const SmallFontContainer = styled.div`
   font-size: 0.8em;
@@ -52,7 +71,16 @@ export const TitleContainer = styled.div`
   font-weight: bold;
 `;
 
-
 export const FooterContainer = styled(SmallFontContainer)`
   margin-top: 2em;
+`;
+export const ButtonContainer = styled.div`
+  display: flex;
+  align-self: center;
+`;
+
+export const LayoutWIthButton = styled.div`
+display: flex;
+flex-flow: column nowrap;
+align-self: center;
 `;

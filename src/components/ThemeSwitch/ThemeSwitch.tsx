@@ -2,8 +2,7 @@ import Switch from "@material-ui/core/Switch";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconName } from "@fortawesome/fontawesome-common-types";
-import { IconPrefix } from "../Theme";
+
 interface ThemeSwitchProps {
   toggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;

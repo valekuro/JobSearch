@@ -1,10 +1,14 @@
 import styled from "styled-components";
-export default function CardsBadge() {
+
+interface CardsBadgeProps {
+  content?: JSX.Element | string;
+}
+export default function CardsBadge({content}:CardsBadgeProps) {
   let randomColor = require("randomcolor");
   let color = randomColor();
   return (
     <CardsBadgeContainer badgeColor={color}>
-      <div>gfff</div>
+      <div>{content}</div>
     </CardsBadgeContainer>
   );
 }

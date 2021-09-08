@@ -17,6 +17,7 @@ export const JobSlice = createSlice({
       })
       state.jobs = arr;
     });
+    
   }, 
  
 });

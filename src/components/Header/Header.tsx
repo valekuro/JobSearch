@@ -1,7 +1,7 @@
 import ThemeSwitch from "../ThemeSwitch";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import Search from "../Search";
+import SearchBar from "../SearchBar";
 
 interface HeaderProps {
   toggle: boolean;
@@ -9,7 +9,6 @@ interface HeaderProps {
   logo: string;
 }
 export default function Header({ toggle, setToggle, logo }: HeaderProps) {
-  const dispatch = useAppDispatch();
   const colorTheme = useAppSelector((state) => state.ThemeSlice.themeSelected);
   return (
     <>
@@ -17,7 +16,7 @@ export default function Header({ toggle, setToggle, logo }: HeaderProps) {
         <LogoStyle src={logo} />
         <ThemeSwitch toggle={toggle} setToggle={setToggle} />
       </HeaderContainer>
-      <Search/>
+      <SearchBar/>
     </>
   );
 }
@@ -51,5 +50,5 @@ export const HeaderContainer = styled.div<{ colorTheme: string }>`
 `;
 
 export const LogoStyle = styled.img`
-  width: 4em;
+  width: 4.5em;
 `;

@@ -34,7 +34,7 @@ export const theme = {
       primaryColor: "black",
     },
     background: {
-      primaryColor: "white",
+      primaryColor: "#eeeeee",
     },
     shadows: {
       primaryShadows: "rgb(0 0 0 / 31%)",

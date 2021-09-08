@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { setTheme } from "../../components/reducers/ThemeSlice";
 import styled from "styled-components";
 import Home from '../Home';
-import Logo from '../../img/team.png'
+import Logo from '../../img/dolly.png'
 interface PageLayoutProps {
   toggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
