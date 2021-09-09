@@ -20,7 +20,7 @@ export async function fetchJobsByUser(user:string){
         arr.push(res[key])
         return arr;
       })
-      
+    
 }
 /* export const fetchJobsByUser = createAsyncThunk(
   'JobSlice/fetchJobsByUser',

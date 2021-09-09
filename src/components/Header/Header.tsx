@@ -1,14 +1,16 @@
 import ThemeSwitch from "../ThemeSwitch";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import SearchBar from "../SearchBar";
 
 interface HeaderProps {
   toggle: boolean;
+  searchResult: any[];
+  setSearchResult: React.Dispatch<React.SetStateAction<any[]>>;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   logo: string;
 }
-export default function Header({ toggle, setToggle, logo }: HeaderProps) {
+export default function Header({ toggle, setToggle, searchResult, setSearchResult, logo }: HeaderProps) {
   const colorTheme = useAppSelector((state) => state.ThemeSlice.themeSelected);
   return (
     <>
@@ -16,7 +18,7 @@ export default function Header({ toggle, setToggle, logo }: HeaderProps) {
         <LogoStyle src={logo} />
         <ThemeSwitch toggle={toggle} setToggle={setToggle} />
       </HeaderContainer>
-      <SearchBar/>
+      <SearchBar result={searchResult} setResult={setSearchResult}/>
     </>
   );
 }

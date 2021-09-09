@@ -1,37 +1,58 @@
-import styled from "styled-components";
+import Autocomplete from "@material-ui/core/Autocomplete";
+import TextField from "@material-ui/core/TextField";
+import useStyles from "./styles";
+import {useRef} from 'react'
 interface SearchProps {
   radius?: string;
   startAdornments?: JSX.Element;
-  textIndent?:string;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  value?:string;
-  placeholder: string;
+  userArray: any[];
+  setState: React.Dispatch<React.SetStateAction<string>>;
 }
-export default function Search({ radius, startAdornments, textIndent, onChange, value, placeholder }: SearchProps) {
+export default function Search({
+  radius,
+  startAdornments,
+  userArray,
+  setState
+}: 
+SearchProps) {
+  const styles = useStyles();
+const handleAutocompleteChange = (value:string)=>{
+  setState(value)
+}
+
   return (
-    <InputSearchContainer>
-      {startAdornments}
-      <InputSearch radius={radius} textIndent={textIndent} placeholder={placeholder} value={value} onChange={onChange}></InputSearch>
-    </InputSearchContainer>
+      <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        options={userArray}
+        style={{
+          display: 'flex',
+          alignSelf: 'center',
+          fontSize: 12,
+          textIndent: "0.5em",
+          borderTop: "none",
+          borderBottom: "none",
+          borderLeft: "none",
+         // borderRight: "1px solid #c2c2c2",
+          borderRadius: `${radius}`,
+         width: '100%'
+        }}
+        onChange={(event, value) => handleAutocompleteChange(value)} // prints the selected value
+        renderInput={(params: any) => (
+          <TextField
+            {...params}
+            fullWidth
+            className={styles.margin}
+            margin="normal"
+            variant="outlined"
+            InputProps={{
+              ...params.InputProps,
+              //type: "search",
+              startAdornment: startAdornments,
+            }}
+          />
+        )}
+      />
   );
 }
 
-export const InputSearch = styled.input<{ radius: string | undefined, textIndent: string | undefined }>`
-  padding: 1.5em;
-  text-indent: ${(props) => (props.textIndent ? `${props.textIndent}em` : "0.5em")};
-  width: -webkit-fill-available;
-  border-top: none;
-  border-bottom: none;
-  border-left: none;
-  border-right: 1px solid #c2c2c2;
-  border-radius: ${(props) => (props.radius ? props.radius : "none")};
-  :focus{
-    outline: none;
-  }
-`;
-
-export const InputSearchContainer = styled.div`
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-`;
