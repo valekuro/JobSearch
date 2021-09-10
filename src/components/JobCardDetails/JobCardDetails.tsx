@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import { useAppSelector } from "../../store/hooks";
 interface JobCardDetailProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,25 +17,56 @@ export default function JobCardDetail({
   title,
   insertBy,
   footer,
-  body
+  body,
 }: JobCardDetailProps) {
+  const colorTheme = useAppSelector((state) => state.ThemeSlice.themeSelected);
+
   return (
-    <ModalContainer>
-      <div>{footer}</div>
-      <div>{title}</div>
-      <div>{insertBy}</div>
-      <div>{body}</div>
-      <div onClick={() => setShowModal(!showModal)}>CLOSE</div>
+    <ModalContainer colorTheme={colorTheme}>
+      <InternalContainer>
+        <HeaderModal>
+          <div>{footer}</div>
+          <div>{insertBy}</div>
+          {topInformations?.map((info, key) => {
+            <span key={key}>{info}</span>;
+          })}
+          <div onClick={() => setShowModal(!showModal)}>CLOSE</div>
+        </HeaderModal>
+        <BodyModal>
+          <Title>{title}</Title>
+          <div>{body}</div>
+        </BodyModal>
+      </InternalContainer>
     </ModalContainer>
   );
 }
 
-export const ModalContainer = styled.div`
+export const ModalContainer = styled.div<{ colorTheme: string }>`
   position: absolute;
-  background-color: blue;
+  background-color: ${(props) =>
+    props.theme[props.colorTheme].cardColor.primaryColor};
+  color: ${(props) => props.theme[props.colorTheme].text.primaryColor};
   padding: 2em;
   min-width: 12em;
-  height: 12em;
+  max-width: 24em;
+  min-height: 12em;
   display: block;
   z-index: 2;
 `;
+
+export const HeaderModal = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 2em;
+  justify-content: space-around;
+`;
+
+export const InternalContainer = styled.div``;
+
+export const BodyModal = styled.div``;
+
+
+export const Title = styled.div`
+
+    font-size:20px;
+`
