@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAppSelector } from "../../store/hooks";
+import { theme } from "../Theme/Theme";
+
 interface JobCardDetailProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +26,15 @@ export default function JobCardDetail({
 
   return (
     <ModalContainer colorTheme={colorTheme}>
+      <div onClick={() => setShowModal(!showModal)} style={{textAlign:'right'}}>
+            <FontAwesomeIcon
+            icon={["fas", "times-circle"]}
+            style={{
+              color: `${theme.dark.headerBackground.contrastColor}`,
+              fontSize: '1.5em'
+            }}
+          />
+          </div>
       <InternalContainer>
         <HeaderModal>
           <div>{footer}</div>
@@ -30,11 +42,11 @@ export default function JobCardDetail({
           {topInformations?.map((info, key) => {
             <span key={key}>{info}</span>;
           })}
-          <div onClick={() => setShowModal(!showModal)}>CLOSE</div>
+          
         </HeaderModal>
         <BodyModal>
           <Title>{title}</Title>
-          <div>{body}</div>
+          <Body>{body}</Body>
         </BodyModal>
       </InternalContainer>
     </ModalContainer>
@@ -58,15 +70,18 @@ export const HeaderModal = styled.div`
   display: flex;
   flex-flow: row nowrap;
   padding: 2em;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 export const InternalContainer = styled.div``;
 
 export const BodyModal = styled.div``;
 
+export const Body = styled.p`
+text-align: justify;
+`;
 
-export const Title = styled.div`
-
-    font-size:20px;
+export const Title = styled.h2`
+text-align: center;
+text-transform: uppercase;
 `

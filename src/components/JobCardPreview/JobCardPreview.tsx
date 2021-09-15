@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CardsBadge from "../CardsBadge";
 import { useAppSelector } from "../../store/hooks";
-import { useState } from "react";
+import { useState} from "react";
 import JobCardDetail from "../JobCardDetails";
 export interface JobCardPreviewProps {
   topInformations?: string[];
@@ -12,6 +12,8 @@ export interface JobCardPreviewProps {
   displayBadge: boolean;
   badgeContent?: JSX.Element | string;
   body?: string | undefined;
+  enableOnClick: boolean;
+  ref?: React.MutableRefObject<any> | undefined;
 }
 
 export default function JobCardPreview({
@@ -22,16 +24,37 @@ export default function JobCardPreview({
   footer,
   displayBadge,
   badgeContent,
-  body
-}: JobCardPreviewProps) {
+  body,
+  enableOnClick,
+}: JobCardPreviewProps)  {
   const colorTheme = useAppSelector((state) => state.ThemeSlice.themeSelected);
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  const handleShowModal = (show: boolean) => {
+    setShowModal(show);
+    window.scrollTo({ top: 90, behavior: "smooth" });
+  };
   return (
     <>
-    {showModal && <JobCardDetail showModal={showModal} setShowModal={setShowModal} topInformations={topInformations} title={title} insertBy={insertBy} footer={footer} body={body}/>}
+      {showModal && (
+        <JobCardDetail
+          showModal={showModal}
+          setShowModal={setShowModal}
+          topInformations={topInformations}
+          title={title}
+          insertBy={insertBy}
+          footer={footer}
+          body={body}
+        />
+      )}
+
       <JobPreviewContainer
         colorTheme={colorTheme}
-        onClick={() => setShowModal(!showModal)}
+        onClick={
+          enableOnClick
+            ? () => handleShowModal(!showModal)
+            : () => handleShowModal(false)
+        }
       >
         {displayBadge ? <CardsBadge content={badgeContent} /> : null}
 

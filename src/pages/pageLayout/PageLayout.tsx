@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { setTheme } from "../../components/reducers/ThemeSlice";
 import styled from "styled-components";
 import Home from "../Home";
@@ -17,6 +17,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import JobCardPreview from "../../components/JobCardPreview";
 import { fetchJobs } from "../../utils/requests";
+import Footer from "../../components/Footer/Footer";
 interface PageLayoutProps {
   toggle: boolean;
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,6 +49,9 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
     setPartialData(data.slice(cardToShow, cardToShow + jobsNumberToShow));
     setCardToShow(cardToShow + jobsNumberToShow);
   };
+  const myRef:any = useRef<React.LegacyRef<HTMLSpanElement> | undefined>();
+  console.log(myRef);
+
   const jobsCardComplete:()=>JSX.Element[] = () => {
     const jobsCardArray: JSX.Element[] = partialData.map((elem) => {
       return (
@@ -59,6 +63,8 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
           footer={`Luogo : ${elem["postId"]}`}
           displayBadge={true}
           badgeContent={<FontAwesomeIcon icon={["fas", "laptop-house"]} />}
+          enableOnClick ={true}
+          ref={myRef}
         />
       );
     });
@@ -67,6 +73,7 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
         title={"Vuoi vedere altri annunci?"}
         button={<Button onClick={handleNextJobsToShow} children={"Next"} />}
         displayBadge={false}
+        enableOnClick = {false}
       />
     );
     return jobsCardArray;
@@ -78,10 +85,12 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
         <JobCardPreview
           topInformations={["5h ago", elem[0]["time"]]}
           title={elem[0]["name"]}
+          body={elem[0]['body']}
           insertBy={elem[0]["email"]}
           footer={`Luogo : ${elem[0]["postId"]}`}
           displayBadge={true}
           badgeContent={<FontAwesomeIcon icon={["fas", "laptop-house"]} />}
+          enableOnClick = {true}
         />
       );
     });
@@ -90,6 +99,7 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
         title={"Vuoi vedere tutti gli annunci?"}
         button={<Button onClick={()=>setResult([])} children={"Torna indietro"} />}
         displayBadge={false}
+        enableOnClick = {false}
       />
     );
     return jobsCardArray;
@@ -97,6 +107,8 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
 
   return (
       <PageLayoutExternalContainer colorTheme={colorTheme}>
+                   <span ref={myRef}> </span> 
+
         <Header
           toggle={toggle}
           setToggle={setToggle}
@@ -104,9 +116,8 @@ export default function PageLayout({ toggle, setToggle }: PageLayoutProps) {
           searchResult={result}
           setSearchResult={setResult}
         />
-         
+
         { result.length!==0 ? <Home dataToShow={jobsSearchCard()} /> : <Home dataToShow={jobsCardComplete()}/>}
-          
       </PageLayoutExternalContainer>
   );
 }
